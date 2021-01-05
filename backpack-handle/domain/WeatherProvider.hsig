@@ -1,0 +1,14 @@
+signature WeatherProvider where
+
+data Temperature
+instance Show Temperature
+
+data WeatherData = WeatherData { temperature :: Temperature }
+
+type Location = String
+type Day = String
+
+data Handle
+
+-- | The interface of `WeatherProvider` with available methods.
+getWeatherData :: Handle -> Location -> Day -> IO WeatherData

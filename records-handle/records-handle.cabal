@@ -1,0 +1,47 @@
+cabal-version:       >=2
+name:                records-handle
+version:             0.1.0.0
+license-file:        LICENSE
+author:              Evgenii Akentev
+maintainer:          i@ak3n.com
+build-type:          Simple
+extra-source-files:  CHANGELOG.md
+
+library domain
+  hs-source-dirs: domain
+  exposed-modules: WeatherProvider
+                 , WeatherReporter
+  default-language: Haskell2010
+  build-depends:    base
+
+library impl
+  hs-source-dirs: impl
+  exposed-modules: SuperWeatherProvider
+  default-language: Haskell2010
+  build-depends:    base
+                  , domain
+
+library test-impl
+  hs-source-dirs: test-impl
+  exposed-modules: TestWeatherProvider
+  default-language: Haskell2010
+  build-depends:    base
+                  , domain
+
+executable records-handle-exe
+  main-is:             Main.hs
+  build-depends:       base >=4.13 && <4.14
+                     , domain
+                     , impl
+  default-language:    Haskell2010
+
+test-suite spec
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Test.hs
+  default-language:   Haskell2010
+  build-depends:       base >= 4.7 && < 5
+                     , QuickCheck
+                     , hspec
+                     , domain
+                     , test-impl
