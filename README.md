@@ -1,4 +1,4 @@
-This repository contains examples of the Handle pattern. We start from `simple` that contains domain logic and iterate trying to use records and backpack as a way to test the domain logic.
+This repository contains examples of [the Handle pattern](https://jaspervdj.be/posts/2018-03-08-handle-pattern.html). We start from `simple` that contains domain logic and iterate trying to use records and backpack as a way to test the domain logic.
 
 - `simple` is a library with two modules: `WeatherProvider` (provides data) and `WeatherReporter` (uses the data to create a report).
 
