@@ -1,16 +1,23 @@
 module WeatherReporter where
 
-import WeatherProvider
+import qualified WeatherProvider
 
 type WeatherReport = String
 
+-- | We hide dependencies in the handle
+data Handle = Handle { weatherProvider :: WeatherProvider.Handle }
+
+-- | Constructor for Handle
+new :: WeatherProvider.Handle -> Handle
+new = Handle
+
 -- | Domain logic. Usually some pure code that might use mtl, free monads, etc.
-createWeatherReport :: WeatherData -> WeatherReport
-createWeatherReport (WeatherData temp) =
+createWeatherReport :: WeatherProvider.WeatherData -> WeatherReport
+createWeatherReport (WeatherProvider.WeatherData temp) =
   "The current temperature in London is " ++ (show temp)
 
 -- | Domain logic that uses external dependency to get data and process it.
-getCurrentWeatherReportInLondon :: WeatherProvider.Handle -> IO WeatherReport
-getCurrentWeatherReportInLondon wph = do
+getCurrentWeatherReportInLondon :: Handle -> IO WeatherReport
+getCurrentWeatherReportInLondon (Handle wph) = do
   weatherData <- WeatherProvider.getWeatherData wph "London" "now"
   return $ createWeatherReport weatherData

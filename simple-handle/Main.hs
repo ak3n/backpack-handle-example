@@ -6,5 +6,6 @@ import qualified WeatherReporter
 main :: IO ()
 main = do
   let wph = WeatherProvider.new
-  weatherReportInLondon <- WeatherReporter.getCurrentWeatherReportInLondon wph
+  let wrh = WeatherReporter.new wph
+  weatherReportInLondon <- WeatherReporter.getCurrentWeatherReportInLondon wrh
   putStrLn weatherReportInLondon

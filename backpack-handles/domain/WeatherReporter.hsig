@@ -1,0 +1,10 @@
+signature WeatherReporter where
+
+import qualified WeatherProvider
+
+type WeatherReport = String
+
+data Handle = Handle { weatherProvider :: WeatherProvider.Handle }
+
+-- | This is domain logic. It uses `WeatherProvider` to get the actual data.
+getCurrentWeatherReportInLondon :: Handle -> IO WeatherReport

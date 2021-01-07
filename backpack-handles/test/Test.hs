@@ -1,6 +1,5 @@
 import Test.Hspec
 
-import qualified TestWeatherProvider
 import qualified WeatherProvider
 import qualified WeatherReporter
 
@@ -8,9 +7,9 @@ main :: IO ()
 main = hspec spec
 
 weatherWithTemp :: WeatherProvider.Temperature -> WeatherReporter.Handle
-weatherWithTemp = WeatherReporter.new
-  . TestWeatherProvider.new
-  . TestWeatherProvider.Config
+weatherWithTemp t = WeatherReporter.new
+  $ WeatherProvider.new
+  $ WeatherProvider.Config t
 
 spec :: Spec
 spec = describe "WeatherReporter" $ do
