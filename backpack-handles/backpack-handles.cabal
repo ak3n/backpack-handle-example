@@ -7,7 +7,7 @@ maintainer:          i@ak3n.com
 build-type:          Simple
 extra-source-files:  CHANGELOG.md
 
-library domain
+library domain-provider
   hs-source-dirs: domain
   signatures:      WeatherProvider
   default-language: Haskell2010
@@ -17,18 +17,23 @@ library domain-reporter
   hs-source-dirs: domain
   signatures:      WeatherReporter
   default-language: Haskell2010
-  build-depends:    base, domain
+  build-depends:    base, domain-provider
 
-library impl
+library impl-provider
   hs-source-dirs: impl
   exposed-modules: SuperWeatherProvider
-                 , SuperWeatherReporter
-  reexported-modules: SuperWeatherProvider as WeatherProvider,
-    SuperWeatherReporter as WeatherReporter
+  reexported-modules: SuperWeatherProvider as WeatherProvider
   default-language: Haskell2010
   build-depends:    base
 
-library test-impl
+library impl-reporter
+  hs-source-dirs: impl
+  exposed-modules: SuperWeatherReporter
+  reexported-modules: SuperWeatherReporter as WeatherReporter
+  default-language: Haskell2010
+  build-depends:    base, domain-provider
+
+library test-provider
   hs-source-dirs: test-impl
   exposed-modules: TestWeatherProvider
   reexported-modules: TestWeatherProvider as WeatherProvider
@@ -38,8 +43,10 @@ library test-impl
 executable main
   main-is:             Main.hs
   build-depends:       base >=4.13 && <4.14
-                     , impl
-                     , domain
+                     , impl-provider
+                     , impl-reporter
+                     , domain-reporter
+                     , domain-provider
   default-language:    Haskell2010
 
 test-suite spec
@@ -50,8 +57,7 @@ test-suite spec
   build-depends:       base >= 4.7 && < 5
                      , QuickCheck
                      , hspec
-                     , domain
-                     , test-impl
-                     , impl
-  mixins:
-    impl (WeatherProvider as UnusedWeatherProvider, WeatherReporter)
+                     , domain-reporter
+                     , domain-provider
+                     , test-provider
+                     , impl-reporter
