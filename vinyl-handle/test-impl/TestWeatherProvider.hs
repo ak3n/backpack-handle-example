@@ -14,8 +14,8 @@ data Config = Config
 
 new :: Config -> Handle
 new config = Field (getTestWeatherData (initTemperature config) (initWindSpeed config))
-  :& Field (getWindData (initWindSpeed config))
-  :& Field (getTemperatureData (initTemperature config))
+  :& Field (getTestWindData (initWindSpeed config))
+  :& Field (getTestTemperatureData (initTemperature config))
   :& RNil
 
 -- | This is an implementation `WeatherProvider` interface for tests
@@ -23,8 +23,8 @@ new config = Field (getTestWeatherData (initTemperature config) (initWindSpeed c
 getTestWeatherData :: T.Temperature -> W.WindSpeed -> Location -> Day -> IO WeatherData
 getTestWeatherData temp wind _ _ = return $ WeatherData temp wind
 
-getTemperatureData :: T.Temperature -> Location -> Day -> IO T.Temperature
-getTemperatureData t _ _ = return t
+getTestTemperatureData :: T.Temperature -> Location -> Day -> IO T.Temperature
+getTestTemperatureData t _ _ = return t
 
-getWindData :: W.WindSpeed -> Location -> Day -> IO W.WindSpeed
-getWindData w _ _ = return w
+getTestWindData :: W.WindSpeed -> Location -> Day -> IO W.WindSpeed
+getTestWindData w _ _ = return w

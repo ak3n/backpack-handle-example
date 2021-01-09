@@ -4,9 +4,6 @@
 
 module WeatherReporter where
 
-import HandleRec
-import Data.Vinyl as V
-
 import qualified WeatherProvider
 
 type WeatherReport = String
@@ -27,5 +24,5 @@ createWeatherReport (WeatherProvider.WeatherData temp wind) =
 -- | Domain logic that uses external dependency to get data and process it.
 getCurrentWeatherReportInLondon :: Handle -> IO WeatherReport
 getCurrentWeatherReportInLondon (Handle wph) = do
-  weatherData <- (getMethod @"getWeatherData" wph) "London" "now"
+  weatherData <- WeatherProvider.getWeatherData wph "London" "now"
   return $ createWeatherReport weatherData
