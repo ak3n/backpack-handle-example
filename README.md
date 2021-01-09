@@ -9,3 +9,5 @@ This repository contains examples of [the Handle pattern](https://jaspervdj.be/p
 - `backpack-handle` does the same thing as `records-handle` but using Backpack instead. It allows us to specialize function calls.
 
 - `backpack-handles` goes further and makes `WeatherProvider` and `WeatherReporter` signatures.
+
+- `vinyl-handle` explores the design space using `vinyl` instead of records as Handle. It supports the extension of the interfaces since `vinyl` allows to add fields to the records.

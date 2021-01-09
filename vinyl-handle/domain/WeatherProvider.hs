@@ -1,16 +1,20 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeOperators #-}
 
 module WeatherProvider where
 
+import Data.Vinyl.TypeLevel
 import HandleRec
+import qualified WindProvider as W
+import qualified TemperatureProvider as T
+import QueryTypes
 
-type Temperature = Int
-data WeatherData = WeatherData { temperature :: Temperature }
+data WeatherData = WeatherData { temperature :: T.Temperature, wind :: W.WindSpeed }
 
-type Location = String
-type Day = String
+-- We union the methods of providers and extend it with a common method.
+type Methods = '[ '("getWeatherData", (Location -> Day -> IO WeatherData))
+  ] ++ W.Methods ++ T.Methods
 
-type Handle = HandleRec
-  '[ '("getWeatherData", (Location -> Day -> IO WeatherData))
-  ]
+type Handle = HandleRec Methods
+

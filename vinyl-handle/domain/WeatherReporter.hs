@@ -20,8 +20,9 @@ new = Handle
 
 -- | Domain logic. Usually some pure code that might use mtl, free monads, etc.
 createWeatherReport :: WeatherProvider.WeatherData -> WeatherReport
-createWeatherReport (WeatherProvider.WeatherData temp) =
+createWeatherReport (WeatherProvider.WeatherData temp wind) =
   "The current temperature in London is " ++ (show temp)
+  ++ " and wind speed is " ++ (show wind)
 
 -- | Domain logic that uses external dependency to get data and process it.
 getCurrentWeatherReportInLondon :: Handle -> IO WeatherReport
