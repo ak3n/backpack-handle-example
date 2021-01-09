@@ -1,6 +1,8 @@
 module Main where
 
 import qualified SuperWeatherProvider
+import qualified SuperWindProvider
+import qualified SuperTemperatureProvider
 import qualified WeatherProvider
 import qualified WeatherReporter
 
@@ -8,7 +10,10 @@ import qualified WeatherReporter
 -- our concrete implementation of `WeatherProvider`.
 main :: IO ()
 main = do
-  let wph = SuperWeatherProvider.new
-  let wrh = WeatherReporter.new wph
+  let
+    wp = SuperWindProvider.new
+    tp = SuperTemperatureProvider.new
+    wph = SuperWeatherProvider.new wp tp
+    wrh = WeatherReporter.new wph
   weatherReportInLondon <- WeatherReporter.getCurrentWeatherReportInLondon wrh
   putStrLn weatherReportInLondon
