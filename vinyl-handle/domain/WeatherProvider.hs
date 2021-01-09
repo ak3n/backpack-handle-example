@@ -22,8 +22,5 @@ type Handle = HandleRec Methods
 getWeatherData :: Handle -> Location -> Day -> IO WeatherData
 getWeatherData = getMethod @"getWeatherData"
 
-getTemperatureData :: Handle -> Location -> Day -> IO T.Temperature
-getTemperatureData = getMethod @"getTemperatureData"
-
 getWindData :: Handle -> Location -> Day -> IO W.WindSpeed
 getWindData = getMethod @"getWindData"
